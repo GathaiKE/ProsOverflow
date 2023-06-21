@@ -57,6 +57,8 @@ export const logIn= async(req:ExtdReq,res:Response)=>{
         const {email,password} = req.body
 
         let user:User[]=(await pool.request().input('email',email).execute('getUserByEmail')).recordset
+        console.log(email);
+        
 
         if(user.length===0){
             return res.status(404).json({message:"User does not exist!"})
@@ -71,7 +73,8 @@ export const logIn= async(req:ExtdReq,res:Response)=>{
                     return rest
                 })
 
-            const token=jwt.sign(payload[0],process.env.SECRET_KEY as string,{expiresIn:"3600s"})
+            const token=jwt.sign(payload[0],process.env.SECRET_KEY as string)
+            // ,{expiresIn:"3600s"}
             const username=(payload[0].first_name + " " + payload[0].second_name) as string            
 
             return res.status(201).json({token,role:payload[0].role_id[0],username})
@@ -129,7 +132,7 @@ export const getUserByEmail=async(req:ExtdReq,res:Response)=>{
             let user:User[]=await (await pool.request().input('email',req.payload.email).execute('getUserByEmail')).recordset
 
             if(user.length){
-                return res.status(201).json(user)
+                return res.status(200).json(user)
             } else{
                 return res.status(404).json({message:"User not found!"})
             }
@@ -155,7 +158,7 @@ export const updateUser= async(req:ExtdReq,res:Response)=>{
             .input('first_name',first_name)
             .input('second_name',second_name)
             .input('email',email)
-            .input('user_id',req.payload.user_id)
+            .input('user_id',req.payload.user_id[0])
             .execute('updateUser')
 
             return res.status(201).json({message:"Update successfull!"})
@@ -174,7 +177,7 @@ export const deactivate= async(req:ExtdReq,res:Response)=>{
             return res.status(404).json({message:"Invalid token!"})
         } else{
             await pool.request()
-            .input('user_id',req.payload.user_id).execute('deactivateUser')
+            .input('user_id',req.payload.user_id[0]).execute('deactivateUser')
 
             return res.json({message:"We are sad to see you leave😥"})
         }
@@ -193,7 +196,7 @@ export const getInactive=async(req:ExtdReq,res:Response)=>{
         if(exusers.length===0){
             return res.status(404).json({message:"All users are still active."})
         } else{
-            return res.status(201).json(exusers)
+            return res.status(200).json(exusers)
         }
     } catch (error:any) {
         return res.status(500).json(error.message)

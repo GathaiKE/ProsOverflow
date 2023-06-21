@@ -77,6 +77,7 @@ const logIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const pool = yield mssql_1.default.connect(config_1.sqlConfig);
         const { email, password } = req.body;
         let user = (yield pool.request().input('email', email).execute('getUserByEmail')).recordset;
+        console.log(email);
         if (user.length === 0) {
             return res.status(404).json({ message: "User does not exist!" });
         }
@@ -90,7 +91,8 @@ const logIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     const { password, email_sent, profile_pic, deactivated } = usr, rest = __rest(usr, ["password", "email_sent", "profile_pic", "deactivated"]);
                     return rest;
                 });
-                const token = jsonwebtoken_1.default.sign(payload[0], process.env.SECRET_KEY, { expiresIn: "3600s" });
+                const token = jsonwebtoken_1.default.sign(payload[0], process.env.SECRET_KEY);
+                // ,{expiresIn:"3600s"}
                 const username = (payload[0].first_name + " " + payload[0].second_name);
                 return res.status(201).json({ token, role: payload[0].role_id[0], username });
             }
@@ -144,7 +146,7 @@ const getUserByEmail = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (req.payload) {
             let user = yield (yield pool.request().input('email', req.payload.email).execute('getUserByEmail')).recordset;
             if (user.length) {
-                return res.status(201).json(user);
+                return res.status(200).json(user);
             }
             else {
                 return res.status(404).json({ message: "User not found!" });
@@ -173,7 +175,7 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 .input('first_name', first_name)
                 .input('second_name', second_name)
                 .input('email', email)
-                .input('user_id', req.payload.user_id)
+                .input('user_id', req.payload.user_id[0])
                 .execute('updateUser');
             return res.status(201).json({ message: "Update successfull!" });
         }
@@ -192,7 +194,7 @@ const deactivate = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
         else {
             yield pool.request()
-                .input('user_id', req.payload.user_id).execute('deactivateUser');
+                .input('user_id', req.payload.user_id[0]).execute('deactivateUser');
             return res.json({ message: "We are sad to see you leave😥" });
         }
     }
@@ -210,7 +212,7 @@ const getInactive = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             return res.status(404).json({ message: "All users are still active." });
         }
         else {
-            return res.status(201).json(exusers);
+            return res.status(200).json(exusers);
         }
     }
     catch (error) {

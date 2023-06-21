@@ -9,6 +9,6 @@ CREATE TABLE questions.answers(
 	downvotes INT NOT NULL,
 	accepted int NOT NULL
 
-FOREIGN KEY(question_id) REFERENCES questions.questions(question_id),
+FOREIGN KEY(question_id) REFERENCES questions.questions(question_id) ON DELETE CASCADE,
 FOREIGN KEY(user_id) REFERENCES users.users(user_id)
 );

@@ -37,3 +37,4 @@ app.use('/comments', commentRoutes_1.commentRoutes);
 app.listen(4000, () => {
     console.log("Fungua Server Kijana!");
 });
+exports.default = app;

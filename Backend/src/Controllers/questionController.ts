@@ -75,7 +75,7 @@ export const getAllQuestions = async(req:Request,res:Response)=>{
             const {tag_id, tag, question_id, ...rest} = q
             let tags = qs[question_id] ? qs[question_id]['tags'] : []
             qs[question_id] = rest
-            tags.push({tag, tag_id})
+            tag_id ? tags.push({tag, tag_id}) : ''
             qs[question_id]['tags'] = tags
         }
         return res.status(201).json(qs)
@@ -102,7 +102,7 @@ export const getSingleQuestion=async(req:Request<{question_id:string}>,res:Respo
                 const {tag_id, tag, question_id, ...rest} = q
                 let tags = qs[question_id] ? qs[question_id]['tags'] : []
                 qs[question_id] = rest
-                tags.push({tag, tag_id})
+                tag_id ? tags.push({tag, tag_id}) : ''
                 qs[question_id]['tags'] = tags
             }
             return res.status(201).json(qs)
@@ -150,9 +150,9 @@ export const deleteQuestion=async(req:ExtdQuestReq,res:Response)=>{
         if(!question[0]){
             return res.status(404).json({message:"Question does not exist"})
         }
-        (await pool).request()
-            .input('question_id',question_id)
-            .execute('deleteQuestionTags')
+        // (await pool).request()
+        //     .input('question_id',question_id)
+        //     .execute('deleteQuestionTags')
 
             ;(await pool).request()
             .input('question_id',question_id)
@@ -160,6 +160,6 @@ export const deleteQuestion=async(req:ExtdQuestReq,res:Response)=>{
 
             return res.status(200).json({message:"Deleted!"})
     } catch (error:any) {
-        
+        return res.status(500).json(error.message)
     }
 }

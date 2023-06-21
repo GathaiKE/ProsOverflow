@@ -84,7 +84,7 @@ const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function
             const { tag_id, tag, question_id } = q, rest = __rest(q, ["tag_id", "tag", "question_id"]);
             let tags = qs[question_id] ? qs[question_id]['tags'] : [];
             qs[question_id] = rest;
-            tags.push({ tag, tag_id });
+            tag_id ? tags.push({ tag, tag_id }) : '';
             qs[question_id]['tags'] = tags;
         }
         return res.status(201).json(qs);
@@ -109,7 +109,7 @@ const getSingleQuestion = (req, res) => __awaiter(void 0, void 0, void 0, functi
             const { tag_id, tag, question_id } = q, rest = __rest(q, ["tag_id", "tag", "question_id"]);
             let tags = qs[question_id] ? qs[question_id]['tags'] : [];
             qs[question_id] = rest;
-            tags.push({ tag, tag_id });
+            tag_id ? tags.push({ tag, tag_id }) : '';
             qs[question_id]['tags'] = tags;
         }
         return res.status(201).json(qs);
@@ -153,15 +153,17 @@ const deleteQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (!question[0]) {
             return res.status(404).json({ message: "Question does not exist" });
         }
-        (yield pool).request()
-            .input('question_id', question_id)
-            .execute('deleteQuestionTags');
+        // (await pool).request()
+        //     .input('question_id',question_id)
+        //     .execute('deleteQuestionTags')
+        ;
         (yield pool).request()
             .input('question_id', question_id)
             .execute('deleteQuestion');
         return res.status(200).json({ message: "Deleted!" });
     }
     catch (error) {
+        return res.status(500).json(error.message);
     }
 });
 exports.deleteQuestion = deleteQuestion;
