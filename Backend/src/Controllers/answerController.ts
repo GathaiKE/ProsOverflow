@@ -2,8 +2,9 @@ import { Response } from "express";
 import { Answer, ExtendedAnsReq } from "../interfaces/answerInterfaces";
 import mssql from 'mssql'
 import { sqlConfig } from "../configuration/config";
-import { Question } from "../interfaces/interface";
+// import { Question } from "../interfaces/interface";
 import {v4 as uuid} from 'uuid'
+import { Question } from "../interfaces/questions";
 
 
 
@@ -35,7 +36,7 @@ export const postAnswer=async(req:ExtendedAnsReq,res:Response)=>{
         .input('accepted',accepted)
         .execute('postAnswer')
 
-        return res.status(200).json({message:'Thank you for your response'})
+        return res.status(201).json({message:'Thank you for your response'})
     } catch (error:any) {
         
     }
@@ -109,7 +110,7 @@ export const updateAnswer=async(req:ExtendedAnsReq,res:Response)=>{
 
         if(existingAnswer.length){
             (await pool).request().input('answer_id',answer_id).input('answer',answer).execute('updateAnswer')
-            return res.status(500).json({message:"Update Successful"})
+            return res.status(201).json({message:"Update Successful"})
         } else{
             return res.status(404).json({message:"Answer not found"})
         }

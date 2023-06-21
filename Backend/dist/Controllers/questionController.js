@@ -55,7 +55,7 @@ const postQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             if (!existingTag[0]) {
                 yield (yield pool).request()
                     .input('tag_id', tag_id[i])
-                    .input('tag', tag[i])
+                    .input('tag', tag)
                     .execute('addTag');
             }
             yield (yield pool).request()
@@ -63,7 +63,7 @@ const postQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 .input('tag_id', tag_id[i])
                 .execute('addQuestionTag');
         }
-        return res.status(200).json({ message: "Question added successfully!" });
+        return res.status(201).json({ message: "Question added successfully!" });
     }
     catch (error) {
         return res.status(500).json(error.message);
@@ -87,7 +87,9 @@ const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function
             tag_id ? tags.push({ tag, tag_id }) : '';
             qs[question_id]['tags'] = tags;
         }
-        return res.status(201).json(qs);
+        // console.log(qs[0].tag)
+        // console.log(Questions[0], qs.length);
+        return res.status(200).json(qs);
     }
     catch (error) {
         return res.status(500).json(error.message);

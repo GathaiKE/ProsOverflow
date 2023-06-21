@@ -59,7 +59,7 @@ const server_1 = __importDefault(require("../server"));
             ]));
         });
     });
-    // Log In 
+    // Get By Id
     (0, vitest_1.it)('Should read a user_id from the token and return their details', () => {
         return (0, supertest_1.default)(server_1.default).get('/users/getById')
             .expect('Content-Type', /json/)

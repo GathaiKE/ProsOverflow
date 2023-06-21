@@ -25,13 +25,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 const userRoutes_1 = require("./Routes/userRoutes");
-const question_1 = require("./Routes/question");
+const questionRoutes_1 = require("./Routes/questionRoutes");
 const answerRoutes_1 = require("./Routes/answerRoutes");
 const commentRoutes_1 = require("./Routes/commentRoutes");
 const app = (0, express_1.default)();
 app.use((0, express_1.json)());
 app.use('/users', userRoutes_1.userRoutes);
-app.use('/questions', question_1.questionRoutes);
+app.use('/questions', questionRoutes_1.questionRoutes);
 app.use('/answers', answerRoutes_1.answerRoutes);
 app.use('/comments', commentRoutes_1.commentRoutes);
 app.listen(4000, () => {

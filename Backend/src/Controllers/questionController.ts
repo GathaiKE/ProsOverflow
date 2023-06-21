@@ -39,7 +39,7 @@ export const postQuestion=async(req:ExtdQuestReq,res:Response)=>{
             if(!existingTag[0]){
                 await (await pool).request()
                 .input('tag_id',tag_id[i])
-                .input('tag',tag[i])
+                .input('tag',tag)
                 .execute('addTag')
             }
             
@@ -52,7 +52,7 @@ export const postQuestion=async(req:ExtdQuestReq,res:Response)=>{
 
         
 
-        return res.status(200).json({message:"Question added successfully!"})
+        return res.status(201).json({message:"Question added successfully!"})
     } catch (error:any) {
         return res.status(500).json(error.message)
     }
@@ -71,14 +71,19 @@ export const getAllQuestions = async(req:Request,res:Response)=>{
         let qs={}
 
         for (let i=0; i<Questions.length; i++) {  
-            const q = Questions[i]          
+            const q = Questions[i]     
             const {tag_id, tag, question_id, ...rest} = q
             let tags = qs[question_id] ? qs[question_id]['tags'] : []
             qs[question_id] = rest
             tag_id ? tags.push({tag, tag_id}) : ''
             qs[question_id]['tags'] = tags
         }
-        return res.status(201).json(qs)
+
+        // console.log(qs[0].tag)
+    
+        // console.log(Questions[0], qs.length);
+        
+        return res.status(200).json(qs)
     } catch (error:any) {
         return res.status(500).json(error.message)
     }

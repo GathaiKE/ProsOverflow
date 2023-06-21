@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.acceptAnswer = exports.downvote = exports.upvote = exports.updateAnswer = exports.deleteAnswer = exports.getQuestionAnswer = exports.getAnswers = exports.postAnswer = void 0;
 const mssql_1 = __importDefault(require("mssql"));
 const config_1 = require("../configuration/config");
+// import { Question } from "../interfaces/interface";
 const uuid_1 = require("uuid");
 //Post an answer
 const postAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -40,7 +41,7 @@ const postAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             .input('downvotes', downvotes)
             .input('accepted', accepted)
             .execute('postAnswer');
-        return res.status(200).json({ message: 'Thank you for your response' });
+        return res.status(201).json({ message: 'Thank you for your response' });
     }
     catch (error) {
     }
@@ -107,7 +108,7 @@ const updateAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         let existingAnswer = (yield (yield pool).request().input('answer_id', answer_id).execute('getAnswer')).recordset;
         if (existingAnswer.length) {
             (yield pool).request().input('answer_id', answer_id).input('answer', answer).execute('updateAnswer');
-            return res.status(500).json({ message: "Update Successful" });
+            return res.status(201).json({ message: "Update Successful" });
         }
         else {
             return res.status(404).json({ message: "Answer not found" });

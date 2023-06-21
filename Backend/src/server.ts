@@ -1,6 +1,6 @@
 import express,{json} from 'express'
 import { userRoutes } from './Routes/userRoutes'
-import { questionRoutes } from './Routes/question'
+import { questionRoutes } from './Routes/questionRoutes'
 import { answerRoutes } from './Routes/answerRoutes'
 import { commentRoutes } from './Routes/commentRoutes'
 

@@ -69,7 +69,7 @@ describe('User tests',()=>{
     })
 
 
-    // Log In 
+    // Get By Id
     it('Should read a user_id from the token and return their details',()=>{
         return request(app).get('/users/getById')
         .expect('Content-Type',/json/)

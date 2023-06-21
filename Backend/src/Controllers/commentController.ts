@@ -20,7 +20,7 @@ export const addComment=async(req:ExtendedComReq,res:Response)=>{
         .input('answer_id',answer_id)
         .execute('postComment')
 
-        return res.status(200).json({message:"Comment Added"})
+        return res.status(201).json({message:"Comment Added"})
     } catch (error:any) {
         return res.status(500).json(error.message)
     }
@@ -38,7 +38,7 @@ export const updateComment=async(req:ExtendedComReq,res:Response)=>{
         .input('comment_id',comment_id)
         .execute('updateComment')
 
-        return res.status(500).json({message:"Update successfull"})
+        return res.status(201).json({message:"Update successfull"})
     } catch (error:any) {
         return res.status(500).json(error.message)
     }
@@ -53,7 +53,7 @@ export const deleteComment=async(req:ExtendedComReq,res:Response)=>{
 
         (await pool).request().input('comment_id',comment_id).execute('deleteComment')
 
-        return res.status(500).json({message:"Deleted!"})
+        return res.status(200).json({message:"Deleted!"})
     } catch (error:any) {
         return res.status(500).json(error.message)
     }

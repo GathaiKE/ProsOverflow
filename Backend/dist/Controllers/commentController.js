@@ -30,7 +30,7 @@ const addComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             .input('user_id', (_a = req.payload) === null || _a === void 0 ? void 0 : _a.user_id[0])
             .input('answer_id', answer_id)
             .execute('postComment');
-        return res.status(200).json({ message: "Comment Added" });
+        return res.status(201).json({ message: "Comment Added" });
     }
     catch (error) {
         return res.status(500).json(error.message);
@@ -47,7 +47,7 @@ const updateComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             .input('comment', comment)
             .input('comment_id', comment_id)
             .execute('updateComment');
-        return res.status(500).json({ message: "Update successfull" });
+        return res.status(201).json({ message: "Update successfull" });
     }
     catch (error) {
         return res.status(500).json(error.message);
@@ -60,7 +60,7 @@ const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const { comment_id } = req.params;
         const pool = mssql_1.default.connect(config_1.sqlConfig);
         (yield pool).request().input('comment_id', comment_id).execute('deleteComment');
-        return res.status(500).json({ message: "Deleted!" });
+        return res.status(200).json({ message: "Deleted!" });
     }
     catch (error) {
         return res.status(500).json(error.message);
