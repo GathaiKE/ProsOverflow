@@ -8,3 +8,7 @@ BEGIN
 	INNER JOIN users.roles AS role ON user_role.role_id=role.role_id 
 	WHERE u.user_id=@user_id AND deactivated=0
 END
+
+
+SELECT * FROM questions.tags
+

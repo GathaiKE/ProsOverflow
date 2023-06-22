@@ -47,4 +47,4 @@ BEGIN
     WHERE u.user_id = @user_id;
 END
 
-delete from questions.questions where question_id='c7894baf-188d-4bc1-8c41-4ec8458cd612'
+delete from questions.questions where question_id='c3ade49b-0841-4fb0-8791-b2a47650a400'

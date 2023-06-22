@@ -55,7 +55,7 @@ const postQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             if (!existingTag[0]) {
                 yield (yield pool).request()
                     .input('tag_id', tag_id[i])
-                    .input('tag', tag)
+                    .input('tag', tag[i])
                     .execute('addTag');
             }
             yield (yield pool).request()

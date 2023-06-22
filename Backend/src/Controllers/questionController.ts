@@ -39,7 +39,7 @@ export const postQuestion=async(req:ExtdQuestReq,res:Response)=>{
             if(!existingTag[0]){
                 await (await pool).request()
                 .input('tag_id',tag_id[i])
-                .input('tag',tag)
+                .input('tag',tag[i])
                 .execute('addTag')
             }
             

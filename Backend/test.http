@@ -4,9 +4,9 @@ Content-Type: application/json
 
 {
     "profile_pic":"picture",
-    "first_name":"Test",
-    "second_name":"User",
-    "email":"dee@user.com",
+    "first_name":"Master",
+    "second_name":"Jonathan",
+    "email":"jonathanndambuki16@gmail.com",
     "password":"B91371758@b"
 }
 ###
@@ -17,7 +17,7 @@ POST http://localhost:4000/users/logIn
 Content-Type: application/json
 
 {
-    "email":"dee@user.com",
+    "email":"briannjeri9@gmail.com",
     "password":"B91371758@b"
 }
 ###
@@ -77,17 +77,17 @@ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjc5MjYxMDdkLWIxMGQt
 //post Question
 POST http://localhost:4000/questions/post
 Content-Type: application/json
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSIsIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoidGVzdEB1c2VyLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzM0NzYyN30.YnOQIc9p-B_KT8qyYqr25bHuc6pdzQpVCAn4i-z59jA
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiIsIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoiYnJpYW5uamVyaTlAZ21haWwuY29tIiwicm9sZV9pZCI6WzIsMl0sInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3NDE3ODU4fQ.d59QohIt-BUlb2cVmaQJURv_qGp528X3ZcjgnN296Qg
 
 {
-    "title":"Pundemic",
-    "body":"Why did You get fired from the calender company?",
+    "title":"test",
+    "body":"Test question?",
     "tags":[
-        {"tag":"greetings"},
-        {"tag":"vibes"},
-        {"tag":"puns"},
-        {"tag":"Dad jokes"},
-        {"tag":"laughs"}
+        {"tag":"Node"},
+        {"tag":"express"},
+        {"tag":"angular"},
+        {"tag":"Jitu"},
+        {"tag":"Nyeri"}
     ]
 }
 
@@ -96,25 +96,25 @@ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUt
 //Get All Questions
 
 GET http://localhost:4000/questions/all
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSIsIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoidGVzdEB1c2VyLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzM0NzYyN30.YnOQIc9p-B_KT8qyYqr25bHuc6pdzQpVCAn4i-z59jA
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiIsIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoiYnJpYW5uamVyaTlAZ21haWwuY29tIiwicm9sZV9pZCI6WzIsMl0sInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3NDE3ODU4fQ.d59QohIt-BUlb2cVmaQJURv_qGp528X3ZcjgnN296Qg
 
 ###
 //Get Single Question
-GET http://localhost:4000/questions/single/c3ade49b-0841-4fb0-8791-b2a47650a400
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbImZjOWFhMzVmLTNhYzEtNDU3Yy1hOTNhLWE2YjU2NjRhNzg0ZiIsImZjOWFhMzVmLTNhYzEtNDU3Yy1hOTNhLWE2YjU2NjRhNzg0ZiJdLCJmaXJzdF9uYW1lIjoiS2FyaXVraSIsInNlY29uZF9uYW1lIjoiR2F0aGFpIiwiZW1haWwiOiJnYXRoYWkxMjM0QGVtYWlsLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzI2MTI3OCwiZXhwIjoxNjg3MjY0ODc4fQ.D9KY_FxP53GDiNACsz6ktnQFg83ofVXMLHLWYoNANwM
+GET http://localhost:4000/questions/single/008481c2-4619-4746-be85-121b22d7383b
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiIsIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoiYnJpYW5uamVyaTlAZ21haWwuY29tIiwicm9sZV9pZCI6WzIsMl0sInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3NDE3ODU4fQ.d59QohIt-BUlb2cVmaQJURv_qGp528X3ZcjgnN296Qg
 
 
 ###
 
 //Update question
 
-PUT http://localhost:4000/questions/update/18441734-c506-47f5-8389-87a6c4ed11af
+PUT http://localhost:4000/questions/update/008481c2-4619-4746-be85-121b22d7383b
 Content-Type: application/json
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbImZjOWFhMzVmLTNhYzEtNDU3Yy1hOTNhLWE2YjU2NjRhNzg0ZiIsImZjOWFhMzVmLTNhYzEtNDU3Yy1hOTNhLWE2YjU2NjRhNzg0ZiJdLCJmaXJzdF9uYW1lIjoiS2FyaXVraSIsInNlY29uZF9uYW1lIjoiR2F0aGFpIiwiZW1haWwiOiJnYXRoYWkxMjM0QGVtYWlsLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzI1MzI2OSwiZXhwIjoxNjg3MjU2ODY5fQ.tiD61b8_5BM0YDSEIPdwgXVi0gQktCajSaTUXt_ssPM
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiIsIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoiYnJpYW5uamVyaTlAZ21haWwuY29tIiwicm9sZV9pZCI6WzIsMl0sInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3NDE3ODU4fQ.d59QohIt-BUlb2cVmaQJURv_qGp528X3ZcjgnN296Qg
 
 {
     "title":"PunStar",
-    "body":"Why did you get fired from the calender company??"
+    "body":"This is a test question"
 }
 
 ###
@@ -122,7 +122,7 @@ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbImZjOWFhMzVmLTNhYzEt
 //Delete question
 
 DELETE  http://localhost:4000/questions/delete/c3ade49b-0841-4fb0-8791-b2a47650a400
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbImZjOWFhMzVmLTNhYzEtNDU3Yy1hOTNhLWE2YjU2NjRhNzg0ZiIsImZjOWFhMzVmLTNhYzEtNDU3Yy1hOTNhLWE2YjU2NjRhNzg0ZiJdLCJmaXJzdF9uYW1lIjoiS2FyaXVraSIsInNlY29uZF9uYW1lIjoiR2F0aGFpIiwiZW1haWwiOiJnYXRoYWkxMjM0QGVtYWlsLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzI2MTI3OCwiZXhwIjoxNjg3MjY0ODc4fQ.D9KY_FxP53GDiNACsz6ktnQFg83ofVXMLHLWYoNANwM
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiIsIjE3MjdiMmRiLTMwYWMtNDFiNC05ZDc0LTJkOWQxN2FiZGQyNiJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoiYnJpYW5uamVyaTlAZ21haWwuY29tIiwicm9sZV9pZCI6WzIsMl0sInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3NDE3ODU4fQ.d59QohIt-BUlb2cVmaQJURv_qGp528X3ZcjgnN296Qg
 
 #####
 
@@ -133,7 +133,7 @@ Content-Type: application/json
 token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSIsIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoidGVzdEB1c2VyLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzM0NzYyN30.YnOQIc9p-B_KT8qyYqr25bHuc6pdzQpVCAn4i-z59jA
 
 {
-    "answer":"Because I tok a day off"
+    "answer":"The test question Works"
 }
 
 ###

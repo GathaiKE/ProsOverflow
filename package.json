@@ -4,5 +4,16 @@
     "@types/nodemailer": "^6.4.8",
     "ejs": "^3.1.9",
     "nodemailer": "^6.9.3"
-  }
+  },
+  "name": "prosoverflow",
+  "description": "A Full Stack implementation of Stack overflow's different functionalities.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
