@@ -1,12 +1,9 @@
-import cron from 'node-cron'
 import mssql from 'mssql'
-import nodemailer from 'nodemailer';
-import { ConfigOpts, MessageOpts, User } from '../Interfaces/interfaces';
+import { MessageOpts, User } from '../Interfaces/interfaces';
 import dotenv from 'dotenv'
 import path from 'path'
 dotenv.config({path:path.resolve(__dirname,'../../.env')})
 import ejs from 'ejs';
-import configOptions from '../helpers/sendMail';
 import {sqlConfig} from '../Configurations/sqlConfig'
 import sendEmail from '../helpers/sendMail';
 
@@ -16,7 +13,7 @@ export const acceptAnswerEmail =async()=>{
 
     const users:User[]= (await(await pool.request()).execute('getAcceptedAnswerUsers')).recordset
 
-    console.log(users);
+    console.log(users[0].first_name);
 
     for(let user of users){
 

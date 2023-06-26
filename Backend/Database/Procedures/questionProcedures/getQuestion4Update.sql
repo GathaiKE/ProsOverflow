@@ -1,7 +1,7 @@
 use ProsOverflow
 go
 
-creATE PROCEDURE getQ4Update(@question_id varchar(100))
+creATE or alter PROCEDURE getQ4Update(@question_id varchar(100))
 as
 begin
 	select * from questions.questions where question_id=@question_id

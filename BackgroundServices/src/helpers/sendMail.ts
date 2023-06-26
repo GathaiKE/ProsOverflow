@@ -20,13 +20,9 @@ let configOptions: ConfigOpts = {
 
     let sendEmail = async(messageOpts:MessageOpts)=>{
         let transporter= createTrans(configOptions)
-
     await transporter.sendMail(messageOpts,(error,res)=>{
         error?error:res.response
     })
     }
 
     export default sendEmail
-
-
-    // log()

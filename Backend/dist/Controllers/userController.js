@@ -76,9 +76,9 @@ const logIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const pool = yield mssql_1.default.connect(config_1.sqlConfig);
         const { email, password } = req.body;
+        console.log(req.payload);
         let user = (yield pool.request().input('email', email).execute('getUserByEmail')).recordset;
-        console.log(email);
-        if (user.length === 0) {
+        if (!user[0]) {
             return res.status(404).json({ message: "User does not exist!" });
         }
         else {
@@ -106,9 +106,13 @@ exports.logIn = logIn;
 //Get all Users
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { page } = req.params;
+        const pagesize = 10;
+        const totalpages = +'';
         const pool = yield mssql_1.default.connect(config_1.sqlConfig);
-        let users = (yield (yield pool.request()).execute('getPagUser')).recordset;
+        let users = (yield (yield pool.request()).input('pageNumber', page).input('pageSize', pagesize).input('totalPages', totalpages).execute('getChattyUsers')).recordset;
         if (users) {
+            console.log("userslist", users);
             return res.status(200).json(users);
         }
         else {

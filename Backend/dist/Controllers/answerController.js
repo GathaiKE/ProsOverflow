@@ -127,7 +127,7 @@ const upvote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         let answer = (yield (yield pool).request().input('answer_id', answer_id).execute('getAnswer')).recordset;
         if (answer.length) {
             let upvotes = answer[0].upvotes + 1;
-            console.log(answer[0].upvotes);
+            // console.log(answer[0].upvotes);
             (yield pool).request().input('answer_id', answer_id).input('upvotes', upvotes).execute('upvote');
             return res.status(200).json(answer);
         }

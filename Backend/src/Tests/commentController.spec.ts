@@ -65,17 +65,17 @@ describe('Comment tests',()=>{
 
     //Delete comment
 
-        // it('Should delete a selected comment',()=>{
-        //     return request(app).delete('/comments/delete/cd75d588-e257-465d-858c-55ff9df8c274')
-        //     .expect('Content-Type',/json/)
-        //     .set('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSIsIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoidGVzdEB1c2VyLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzM0NzYyN30.YnOQIc9p-B_KT8qyYqr25bHuc6pdzQpVCAn4i-z59jA')
-        //     .expect(200)
-        //     .then((res:request.Response)=>{
-        //         expect (res.body).toEqual(
-        //             expect.objectContaining({
-        //                 message:expect.stringMatching('Deleted!')
-        //             })
-        //         )
-        //     })
-        // })
+        it('Should delete a selected comment',()=>{
+            return request(app).delete('/comments/delete/cd75d588-e257-465d-858c-55ff9df8c274')
+            .expect('Content-Type',/json/)
+            .set('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSIsIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoidGVzdEB1c2VyLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzM0NzYyN30.YnOQIc9p-B_KT8qyYqr25bHuc6pdzQpVCAn4i-z59jA')
+            .expect(200)
+            .then((res:request.Response)=>{
+                expect (res.body).toEqual(
+                    expect.objectContaining({
+                        message:expect.stringMatching('Deleted!')
+                    })
+                )
+            })
+        })
 })

@@ -22,14 +22,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 const userRoutes_1 = require("./Routes/userRoutes");
 const questionRoutes_1 = require("./Routes/questionRoutes");
 const answerRoutes_1 = require("./Routes/answerRoutes");
 const commentRoutes_1 = require("./Routes/commentRoutes");
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
-app.use((0, express_1.json)());
+app.use((0, express_1.json)()),
+    app.use((0, cors_1.default)());
 app.use('/users', userRoutes_1.userRoutes);
 app.use('/questions', questionRoutes_1.questionRoutes);
 app.use('/answers', answerRoutes_1.answerRoutes);

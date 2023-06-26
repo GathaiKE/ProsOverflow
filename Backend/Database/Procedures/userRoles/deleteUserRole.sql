@@ -1,7 +1,7 @@
 USE ProsOverflow
 GO
 
-CREATE PROCEDURE deleteUser(
+CREATE or alter PROCEDURE deleteUser(
 	@user_id VARCHAR(100)
 )
 AS

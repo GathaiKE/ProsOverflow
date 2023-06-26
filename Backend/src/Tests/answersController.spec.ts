@@ -75,19 +75,19 @@ it('Should Add answer to particular question',()=>{
 
     //Delete an answer
 
-    // it('Should delete selected answer',()=>{
-    //     return request(app).delete('/answers/delete/1af0e777-4c01-49c9-a14f-45d8607756cd')
-    //     .expect('Content-Type',/json/)
-    //     .set('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSIsIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoidGVzdEB1c2VyLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzM0NzYyN30.YnOQIc9p-B_KT8qyYqr25bHuc6pdzQpVCAn4i-z59jA')
-    //     .expect(200)
-    //     .then((res:request.Response)=>{
-    //         expect (res.body).toEqual(
-    //             expect.objectContaining({
-    //                 message:expect.stringContaining('Deleted!')
-    //             })
-    //         )
-    //     })
-    // })
+    it('Should delete selected answer',()=>{
+        return request(app).delete('/answers/delete/1af0e777-4c01-49c9-a14f-45d8607756cd')
+        .expect('Content-Type',/json/)
+        .set('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSIsIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoidGVzdEB1c2VyLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzM0NzYyN30.YnOQIc9p-B_KT8qyYqr25bHuc6pdzQpVCAn4i-z59jA')
+        .expect(200)
+        .then((res:request.Response)=>{
+            expect (res.body).toEqual(
+                expect.objectContaining({
+                    message:expect.stringContaining('Deleted!')
+                })
+            )
+        })
+    })
 
     //Update Answer
 

@@ -1,7 +1,7 @@
 USE ProsOverflow
 GO
 
-CREATE PROCEDURE addUserRole(
+CREATE or alter PROCEDURE addUserRole(
 	@user_id VARCHAR(100),
 	@role_id INT
 )

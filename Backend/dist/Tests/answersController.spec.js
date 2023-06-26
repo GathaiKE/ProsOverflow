@@ -63,19 +63,17 @@ const server_1 = __importDefault(require("../server"));
         });
     });
     //Delete an answer
-    // it('Should delete selected answer',()=>{
-    //     return request(app).delete('/answers/delete/1af0e777-4c01-49c9-a14f-45d8607756cd')
-    //     .expect('Content-Type',/json/)
-    //     .set('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSIsIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoidGVzdEB1c2VyLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzM0NzYyN30.YnOQIc9p-B_KT8qyYqr25bHuc6pdzQpVCAn4i-z59jA')
-    //     .expect(200)
-    //     .then((res:request.Response)=>{
-    //         expect (res.body).toEqual(
-    //             expect.objectContaining({
-    //                 message:expect.stringContaining('Deleted!')
-    //             })
-    //         )
-    //     })
-    // })
+    (0, vitest_1.it)('Should delete selected answer', () => {
+        return (0, supertest_1.default)(server_1.default).delete('/answers/delete/1af0e777-4c01-49c9-a14f-45d8607756cd')
+            .expect('Content-Type', /json/)
+            .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpbIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSIsIjA1YTM1MDRkLWQ0YzUtNGE2Ni04ZGVhLWMyZjRkMjU3OTdlYSJdLCJmaXJzdF9uYW1lIjoiVGVzdCIsInNlY29uZF9uYW1lIjoiVXNlciIsImVtYWlsIjoidGVzdEB1c2VyLmNvbSIsInJvbGVfaWQiOlsyLDJdLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NzM0NzYyN30.YnOQIc9p-B_KT8qyYqr25bHuc6pdzQpVCAn4i-z59jA')
+            .expect(200)
+            .then((res) => {
+            (0, vitest_1.expect)(res.body).toEqual(vitest_1.expect.objectContaining({
+                message: vitest_1.expect.stringContaining('Deleted!')
+            }));
+        });
+    });
     //Update Answer
     (0, vitest_1.it)('Should update selected answer', () => {
         return (0, supertest_1.default)(server_1.default).put('/answers/update/b70f9728-0ae2-4a80-a8cb-d34599a31190')

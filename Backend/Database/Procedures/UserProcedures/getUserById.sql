@@ -10,5 +10,3 @@ BEGIN
 END
 
 
-SELECT * FROM questions.tags
-

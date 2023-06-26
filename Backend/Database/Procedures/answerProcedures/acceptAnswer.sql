@@ -7,3 +7,7 @@ BEGIN
 	UPDATE questions.answers SET accepted=1
 	WHERE answer_id=@answer_id
 END
+
+
+
+EXEC 

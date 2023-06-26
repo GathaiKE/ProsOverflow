@@ -36,33 +36,42 @@ const postQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const downvotes = 0;
         const { title, body, tags } = req.body;
         const pool = mssql_1.default.connect(config_1.sqlConfig);
-        yield (yield pool).request()
-            .input('question_id', question_id)
-            .input('title', title)
-            .input('body', body)
-            .input('user_id', (_a = req.payload) === null || _a === void 0 ? void 0 : _a.user_id[0])
-            .input('upvotes', upvotes)
-            .input('downvotes', downvotes)
-            .execute('postQuestion');
-        const updatedTags = tags.map((tag) => {
-            tag.tag_id = (0, uuid_1.v4)();
-            return tag;
-        });
-        const tag_id = updatedTags.map((tag) => tag.tag_id);
-        const tag = updatedTags.map((tag) => tag.tag);
-        for (let i = 0; i < updatedTags.length; i++) {
-            let existingTag = yield (yield (yield pool).request().input('tag_id', tag_id[i]).execute('getSingleTag')).recordset;
-            if (!existingTag[0]) {
-                yield (yield pool).request()
-                    .input('tag_id', tag_id[i])
-                    .input('tag', tag[i])
-                    .execute('addTag');
+        yield (yield pool)
+            .request()
+            .input("question_id", question_id)
+            .input("title", title)
+            .input("body", body)
+            .input("user_id", (_a = req.payload) === null || _a === void 0 ? void 0 : _a.user_id[0])
+            .input("upvotes", upvotes)
+            .input("downvotes", downvotes)
+            .execute("postQuestion");
+        const updatedTags = yield Promise.all(tags.map((tag) => __awaiter(void 0, void 0, void 0, function* () {
+            let tag_id = null;
+            const existingTag = yield (yield (yield pool)
+                .request()
+                .input("tag", tag.tag)
+                .execute("getTagByName")).recordset;
+            if (existingTag.length === 0) {
+                tag_id = (0, uuid_1.v4)();
+                yield (yield pool)
+                    .request()
+                    .input("tag_id", tag_id)
+                    .input("tag", tag.tag)
+                    .execute("addTag");
             }
-            yield (yield pool).request()
-                .input('question_id', question_id)
-                .input('tag_id', tag_id[i])
-                .execute('addQuestionTag');
-        }
+            else {
+                tag_id = existingTag[0].tag_id;
+            }
+            yield (yield pool)
+                .request()
+                .input("question_id", question_id)
+                .input("tag_id", tag_id)
+                .execute("addQuestionTag");
+            return {
+                tag_id,
+                tag: tag.tag
+            };
+        })));
         return res.status(201).json({ message: "Question added successfully!" });
     }
     catch (error) {
@@ -73,23 +82,26 @@ exports.postQuestion = postQuestion;
 //Get All questions
 const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const pool = mssql_1.default.connect(config_1.sqlConfig);
-        let Questions = (yield (yield pool).request().execute('getQuestions')).recordset;
-        if (!Questions[0]) {
+        const pageSize = 10;
+        const { pageNumber } = req.params;
+        const pool = yield mssql_1.default.connect(config_1.sqlConfig);
+        const questions = (yield pool.request().input('pageSize', pageSize).input('pageNumber', pageNumber).execute("gechattyQuestions")).recordset;
+        if (questions.length === 0) {
             return res.status(404).json({ message: "No questions available" });
         }
-        let qs = {};
-        for (let i = 0; i < Questions.length; i++) {
-            const q = Questions[i];
-            const { tag_id, tag, question_id } = q, rest = __rest(q, ["tag_id", "tag", "question_id"]);
-            let tags = qs[question_id] ? qs[question_id]['tags'] : [];
-            qs[question_id] = rest;
-            tag_id ? tags.push({ tag, tag_id }) : '';
-            qs[question_id]['tags'] = tags;
+        const result = [];
+        for (const question of questions) {
+            const { tag_id, tag } = question, rest = __rest(question, ["tag_id", "tag"]);
+            let formattedQuestion = result.find((q) => q.title === question.title && q.body === question.body);
+            if (!formattedQuestion) {
+                formattedQuestion = Object.assign(Object.assign({}, rest), { tags: [] });
+                result.push(formattedQuestion);
+            }
+            if (tag_id && tag) {
+                formattedQuestion.tags.push({ tag_id, tag });
+            }
         }
-        // console.log(qs[0].tag)
-        // console.log(Questions[0], qs.length);
-        return res.status(200).json(qs);
+        return res.status(200).json(result);
     }
     catch (error) {
         return res.status(500).json(error.message);
@@ -99,23 +111,25 @@ exports.getAllQuestions = getAllQuestions;
 //Get Single Question
 const getSingleQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { question_id } = req.params;
-        const pool = mssql_1.default.connect(config_1.sqlConfig);
-        let question = (yield (yield pool).request().input('question_id', question_id).execute('getSingleQuestion')).recordset;
-        if (!question[0]) {
-            return res.status(404).json({ message: "The question was not found" });
+        let { question_id } = req.params;
+        const pool = yield mssql_1.default.connect(config_1.sqlConfig);
+        const questions = (yield pool.request().input("question_id", question_id).execute("getSingleQuestion")).recordset;
+        if (questions.length === 0) {
+            return res.status(404).json({ message: "Question doesn't exist" });
         }
-        let qs = {};
-        for (let i = 0; i < question.length; i++) {
-            const q = question[i];
-            const { tag_id, tag, question_id } = q, rest = __rest(q, ["tag_id", "tag", "question_id"]);
-            let tags = qs[question_id] ? qs[question_id]['tags'] : [];
-            qs[question_id] = rest;
-            tag_id ? tags.push({ tag, tag_id }) : '';
-            qs[question_id]['tags'] = tags;
+        const result = [];
+        for (const question of questions) {
+            const { tag_id, tag } = question, rest = __rest(question, ["tag_id", "tag"]);
+            let formattedQuestion = result.find((q) => q.title === question.title && q.body === question.body);
+            if (!formattedQuestion) {
+                formattedQuestion = Object.assign(Object.assign({}, rest), { tags: [] });
+                result.push(formattedQuestion);
+            }
+            if (tag_id && tag) {
+                formattedQuestion.tags.push({ tag_id, tag });
+            }
         }
-        return res.status(201).json(qs);
-        // return res.status(200).json(question)
+        return res.status(200).json(result);
     }
     catch (error) {
         return res.status(500).json(error.message);
@@ -128,16 +142,20 @@ const updateQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const { title, body, tags } = req.body;
         const { question_id } = req.params;
         const pool = mssql_1.default.connect(config_1.sqlConfig);
-        let question = (yield (yield pool).request().input('question_id', question_id).execute('getQ4Update')).recordset;
+        let question = (yield (yield pool)
+            .request()
+            .input("question_id", question_id)
+            .execute("getQ4Update")).recordset;
         if (!question[0]) {
             return res.status(404).json({ message: "Question not found" });
         }
         else {
-            (yield pool).request()
-                .input('question_id', question_id)
-                .input('title', title)
-                .input('body', body)
-                .execute('updateQuestion');
+            (yield pool)
+                .request()
+                .input("question_id", question_id)
+                .input("title", title)
+                .input("body", body)
+                .execute("updateQuestion");
             return res.status(200).json({ message: "Update Successful😎!" });
         }
     }
@@ -151,17 +169,17 @@ const deleteQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         const { question_id } = req.params;
         const pool = mssql_1.default.connect(config_1.sqlConfig);
-        let question = (yield (yield pool).request().input('question_id', question_id).execute('getSingleQuestion')).recordset;
+        let question = (yield (yield pool)
+            .request()
+            .input("question_id", question_id)
+            .execute("getSingleQuestion")).recordset;
         if (!question[0]) {
             return res.status(404).json({ message: "Question does not exist" });
         }
-        // (await pool).request()
-        //     .input('question_id',question_id)
-        //     .execute('deleteQuestionTags')
-        ;
-        (yield pool).request()
-            .input('question_id', question_id)
-            .execute('deleteQuestion');
+        (yield pool)
+            .request()
+            .input("question_id", question_id)
+            .execute("deleteQuestion");
         return res.status(200).json({ message: "Deleted!" });
     }
     catch (error) {

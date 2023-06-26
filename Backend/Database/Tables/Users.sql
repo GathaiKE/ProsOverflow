@@ -1,5 +1,5 @@
 CREATE DATABASE ProsOverflow
-
+go
 create schema users
 go
 

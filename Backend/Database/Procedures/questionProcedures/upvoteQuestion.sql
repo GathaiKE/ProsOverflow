@@ -1,7 +1,7 @@
 use ProsOverflow
 go
 
-CREATE PROCEDURE upvoteQuestion(
+CREATE or alter PROCEDURE upvoteQuestion(
 	@question_id VARCHAR(100),
 	@upvotes INT
 )

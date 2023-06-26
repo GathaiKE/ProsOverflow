@@ -15,9 +15,7 @@ export interface Question{
     upvotes:number
     downvotes:number
     accepted:number
-    tags:[
-        {tag_id:string,tag:string}
-    ]
+    tags:[]
 }
 
 export interface ExtdQuestReq extends Request{

@@ -1,7 +1,7 @@
 use ProsOverflow
 go
 
-CREATE PROCEDURE addQuestionTag(
+CREATE OR ALTER PROCEDURE addQuestionTag(
 	@question_id VARCHAR(100),
 	@tag_id VARCHAR(100)
 )

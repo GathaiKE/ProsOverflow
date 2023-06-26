@@ -55,12 +55,12 @@ export const logIn= async(req:ExtdReq,res:Response)=>{
     try {
         const pool= await mssql.connect(sqlConfig)
         const {email,password} = req.body
+        console.log(req.payload);
 
         let user:User[]=(await pool.request().input('email',email).execute('getUserByEmail')).recordset
-        console.log(email);
         
 
-        if(user.length===0){
+        if(!user[0]){
             return res.status(404).json({message:"User does not exist!"})
         } else{
             let correctPassword= await bcrypt.compare(password,user[0].password)
@@ -89,9 +89,13 @@ export const logIn= async(req:ExtdReq,res:Response)=>{
 
 export const getUsers = async(req:ExtdReq,res:Response)=>{
     try {
+        const {page}=req.params
+        const pagesize=10
+        const totalpages=+''
         const pool = await mssql.connect(sqlConfig)
-        let users:User[]= (await (await pool.request()).execute('getPagUser')).recordset
+        let users:User[]= (await (await pool.request()).input('pageNumber',page).input('pageSize',pagesize).input('totalPages',totalpages).execute('getChattyUsers')).recordset
         if(users){
+            console.log("userslist",users)
             return res.status(200).json(users)
         } else{
             return res.status(404).json({message:"No Users available"})

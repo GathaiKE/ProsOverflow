@@ -128,10 +128,9 @@ export const upvote=async(req:ExtendedAnsReq,res:Response)=>{
         const pool=mssql.connect(sqlConfig)
 
         let answer:Answer[]=(await (await pool).request().input('answer_id',answer_id).execute('getAnswer')).recordset
-
         if(answer.length){
-            let upvotes:number=answer[0].upvotes + 1
-            console.log(answer[0].upvotes);
+            let upvotes:number=answer[0].upvotes + 1;
+            // console.log(answer[0].upvotes);
             
             (await pool).request().input('answer_id',answer_id).input('upvotes',upvotes).execute('upvote')
 

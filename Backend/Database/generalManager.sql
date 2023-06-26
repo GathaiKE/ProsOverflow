@@ -1,17 +1,18 @@
 use ProsOverflow
 go
 
+exec getNewUsers
 select * from users.roles
 select * from users.users
-select * from questions.answers
+select * from questions.answers d4e809c6-cb96-46b6-9fb6-78bb99670183
 select * from questions.comments
 select * from questions.questions
 select * from questions.tags
 select * from questions.questionTags
 select * from users.userRoles
 
-delete from questions.questions
-
+delete from users.users
+update users.users set email_sent=0
 
 
 drop table users.roles
@@ -33,7 +34,7 @@ begin
 	values (@role)
 end
 
-exec addRole 'user'
+exec postQuestion '1','No','Yes yes','1','0','0'
 
 
 CREATE PROCEDURE GetUserWithRole
@@ -47,4 +48,4 @@ BEGIN
     WHERE u.user_id = @user_id;
 END
 
-delete from questions.questions where question_id='c3ade49b-0841-4fb0-8791-b2a47650a400'
+delete from questions.questions where user_id='f40db967-104f-48f1-817f-f445fdd977ea'
