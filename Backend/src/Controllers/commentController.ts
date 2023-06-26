@@ -73,3 +73,20 @@ export const getAnswerComments=async(req:Request,res:Response)=>{
         return res.status(500).json(error.message)
     }
 }
+//Get Questions Comments
+
+export const getAllComments=async(req:Request,res:Response)=>{
+    try {
+        
+        const pool=mssql.connect(sqlConfig);
+        let comments:Comment[]= (await (await pool).request().execute('getAllComments')).recordset
+
+        if(!comments[0]){
+            return res.status(404).json({Message:"Hakuna maoni!"})
+        }
+
+        return res.status(200).json(comments)
+    } catch (error:any) {
+        return res.status(500).json(error.message)
+    }
+}

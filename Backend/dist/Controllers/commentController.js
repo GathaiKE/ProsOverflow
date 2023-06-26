@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAnswerComments = exports.deleteComment = exports.updateComment = exports.addComment = void 0;
+exports.getAllComments = exports.getAnswerComments = exports.deleteComment = exports.updateComment = exports.addComment = void 0;
 const uuid_1 = require("uuid");
 const mssql_1 = __importDefault(require("mssql"));
 const config_1 = require("../configuration/config");
@@ -80,3 +80,18 @@ const getAnswerComments = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getAnswerComments = getAnswerComments;
+//Get Questions Comments
+const getAllComments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const pool = mssql_1.default.connect(config_1.sqlConfig);
+        let comments = (yield (yield pool).request().execute('getAllComments')).recordset;
+        if (!comments[0]) {
+            return res.status(404).json({ Message: "Hakuna maoni!" });
+        }
+        return res.status(200).json(comments);
+    }
+    catch (error) {
+        return res.status(500).json(error.message);
+    }
+});
+exports.getAllComments = getAllComments;
