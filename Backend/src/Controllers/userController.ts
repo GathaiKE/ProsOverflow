@@ -55,18 +55,17 @@ export const logIn= async(req:ExtdReq,res:Response)=>{
     try {
         const pool= await mssql.connect(sqlConfig)
         const {email,password} = req.body
-        console.log(req.payload);
 
         let user:User[]=(await pool.request().input('email',email).execute('getUserByEmail')).recordset
         
 
         if(!user[0]){
-            return res.status(404).json({message:"User does not exist!"})
+            return res.status(404).json({message:"Wrong Email!"})
         } else{
             let correctPassword= await bcrypt.compare(password,user[0].password)
 
             if(!correctPassword){
-                return res.status(404).json({message:"User does not exist!"})
+                return res.status(404).json({message:"Wrong password!"})
             } else{
                 const payload= user.map(usr=>{
                     const {password,email_sent,profile_pic,deactivated,...rest}=usr
@@ -75,9 +74,10 @@ export const logIn= async(req:ExtdReq,res:Response)=>{
 
             const token=jwt.sign(payload[0],process.env.SECRET_KEY as string)
             // ,{expiresIn:"3600s"}
-            const username=(payload[0].first_name + " " + payload[0].second_name) as string            
+            const username=(payload[0].first_name + " " + payload[0].second_name) as string 
+            
 
-            return res.status(201).json({token,role:payload[0].role_id[0],username})
+            return res.status(201).json({message:"Log In was Successfull!",token,role:payload[0].role_id[0],username})
             }
         }
     } catch (error:any) {

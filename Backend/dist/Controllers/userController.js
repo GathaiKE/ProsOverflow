@@ -76,15 +76,14 @@ const logIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const pool = yield mssql_1.default.connect(config_1.sqlConfig);
         const { email, password } = req.body;
-        console.log(req.payload);
         let user = (yield pool.request().input('email', email).execute('getUserByEmail')).recordset;
         if (!user[0]) {
-            return res.status(404).json({ message: "User does not exist!" });
+            return res.status(404).json({ message: "Wrong Email!" });
         }
         else {
             let correctPassword = yield bcrypt_1.default.compare(password, user[0].password);
             if (!correctPassword) {
-                return res.status(404).json({ message: "User does not exist!" });
+                return res.status(404).json({ message: "Wrong password!" });
             }
             else {
                 const payload = user.map(usr => {
@@ -94,7 +93,7 @@ const logIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 const token = jsonwebtoken_1.default.sign(payload[0], process.env.SECRET_KEY);
                 // ,{expiresIn:"3600s"}
                 const username = (payload[0].first_name + " " + payload[0].second_name);
-                return res.status(201).json({ token, role: payload[0].role_id[0], username });
+                return res.status(201).json({ message: "Log In was Successfull!", token, role: payload[0].role_id[0], username });
             }
         }
     }
