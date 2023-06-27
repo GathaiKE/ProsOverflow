@@ -11,9 +11,9 @@ select * from questions.tags
 select * from questions.questionTags
 select * from users.userRoles
 
-delete from users.users
+delete from users.users where user_id='0e53cb48-b16c-4beb-93a2-3a8040b38130' 
 update users.users set email_sent=0
-
+'60cc9c9e-509c-4ddb-9c52-513a3c917d97'
 
 drop table users.roles
 drop table users.users

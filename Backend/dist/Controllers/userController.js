@@ -93,7 +93,8 @@ const logIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 const token = jsonwebtoken_1.default.sign(payload[0], process.env.SECRET_KEY);
                 // ,{expiresIn:"3600s"}
                 const username = (payload[0].first_name + " " + payload[0].second_name);
-                return res.status(201).json({ message: "Log In was Successfull!", token, role: payload[0].role_id[0], username });
+                let role = payload[0].role_id[0] == "1" ? "admin" : "user";
+                return res.status(201).json({ message: "Log In was Successfull!", token, role, username });
             }
         }
     }

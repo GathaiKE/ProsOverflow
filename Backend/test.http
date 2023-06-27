@@ -3,10 +3,10 @@ POST http://localhost:4000/users/register
 Content-Type: application/json
 
 {
-    "profile_pic":"picture",
-    "first_name":"Master",
-    "second_name":"Gathai",
-    "email":"gathai213@gmail.com",
+    "profile_pic":"https://static.wikia.nocookie.net/penguinsofmadagascar/images/c/cd/King_Julien_profile.png/revision/latest?cb=20151125110328",
+    "first_name":"Admin",
+    "second_name":"The Great",
+    "email":"admin@gmail.com",
     "password":"B91371758@b"
 }
 
@@ -18,7 +18,7 @@ POST http://localhost:4000/users/logIn
 Content-Type: application/json
 
 {
-    "email":"gathai213@gmail.com",
+    "email":"admin@gmail.com",
     "password":"B91371758@b"
 }
 

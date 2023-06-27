@@ -75,9 +75,10 @@ export const logIn= async(req:ExtdReq,res:Response)=>{
             const token=jwt.sign(payload[0],process.env.SECRET_KEY as string)
             // ,{expiresIn:"3600s"}
             const username=(payload[0].first_name + " " + payload[0].second_name) as string 
-            
 
-            return res.status(201).json({message:"Log In was Successfull!",token,role:payload[0].role_id[0],username})
+            let role=payload[0].role_id[0]=="1"?"admin":"user"
+                
+            return res.status(201).json({message:"Log In was Successfull!",token,role,username})
             }
         }
     } catch (error:any) {
