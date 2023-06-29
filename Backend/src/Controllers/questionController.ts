@@ -9,6 +9,7 @@ import { Tag } from "../interfaces/questions";
 
 export const postQuestion = async (req: ExtdQuestReq, res: Response) => {
   try {
+    console.log(req.payload?.user_id[0]);
     const question_id = uuid();
     const upvotes = 0;
     const downvotes = 0;
@@ -203,3 +204,38 @@ export const deleteQuestion = async (req: ExtdQuestReq, res: Response) => {
     return res.status(500).json(error.message);
   }
 };
+
+//Get single user questions
+export const getUserQuestons= async(req:ExtdQuestReq, res:Response)=>{
+  try {
+    const pool=await mssql.connect(sqlConfig)
+    const {pageNumber}=req.params
+    const pageSize=10
+    let questions:Question[]= (await (await pool.request()).input('user_id',req.payload?.user_id[0]).input('pageSize',pageSize).input('pageNumber',pageNumber).execute('getUserQuestions')).recordset
+
+    if(questions.length){
+      return res.status(200).json(questions)
+    } else{
+      return res.status(404).json({message:"You have asked no questions yet"})
+    }
+  } catch (error:any) {
+    return res.status(500).json(error.message)
+  }
+}
+
+//Get all tags
+
+export const getTags= async(req:Request,res:Response)=>{
+  try {
+    const pool = await mssql.connect(sqlConfig)
+    let tags:Tag[]=await(await pool.request().execute('getTags')).recordset
+
+    if(tags.length===0){
+      return res.status(404).json({message:"No tags found!"})
+    } else{
+      return res.status(200).json(tags)
+    }
+  } catch (error:any) {
+    return res.status(500).json(error.message)
+  }
+}

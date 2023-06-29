@@ -15,3 +15,7 @@ CREATE TABLE questions.questions (
 
     FOREIGN KEY (user_id) REFERENCES users.users(user_id)
 );
+
+
+ALTER TABLE questions.questions
+ADD date_posted DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET()

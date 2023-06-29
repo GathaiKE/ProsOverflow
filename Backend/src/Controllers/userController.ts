@@ -68,17 +68,21 @@ export const logIn= async(req:ExtdReq,res:Response)=>{
                 return res.status(404).json({message:"Wrong password!"})
             } else{
                 const payload= user.map(usr=>{
-                    const {password,email_sent,profile_pic,deactivated,...rest}=usr
+                    const {password,email_sent,deactivated,...rest}=usr
                     return rest
                 })
 
             const token=jwt.sign(payload[0],process.env.SECRET_KEY as string)
             // ,{expiresIn:"3600s"}
-            const username=(payload[0].first_name + " " + payload[0].second_name) as string 
+            const first_name=payload[0].first_name 
+            const second_name=payload[0].second_name 
+            const user_id=payload[0].user_id[0]
+            const email=payload[0].email
+            const profile_pic=payload[0].profile_pic
 
             let role=payload[0].role_id[0]=="1"?"admin":"user"
                 
-            return res.status(201).json({message:"Log In was Successfull!",token,role,username})
+            return res.status(201).json({message:"Log In was Successfull!",token,role,first_name,second_name,user_id,email,profile_pic})
             }
         }
     } catch (error:any) {

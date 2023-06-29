@@ -23,14 +23,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteQuestion = exports.updateQuestion = exports.getSingleQuestion = exports.getAllQuestions = exports.postQuestion = void 0;
+exports.getTags = exports.getUserQuestons = exports.deleteQuestion = exports.updateQuestion = exports.getSingleQuestion = exports.getAllQuestions = exports.postQuestion = void 0;
 const mssql_1 = __importDefault(require("mssql"));
 const config_1 = require("../configuration/config");
 const uuid_1 = require("uuid");
 //Post Question
 const postQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b;
     try {
+        console.log((_a = req.payload) === null || _a === void 0 ? void 0 : _a.user_id[0]);
         const question_id = (0, uuid_1.v4)();
         const upvotes = 0;
         const downvotes = 0;
@@ -41,7 +42,7 @@ const postQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             .input("question_id", question_id)
             .input("title", title)
             .input("body", body)
-            .input("user_id", (_a = req.payload) === null || _a === void 0 ? void 0 : _a.user_id[0])
+            .input("user_id", (_b = req.payload) === null || _b === void 0 ? void 0 : _b.user_id[0])
             .input("upvotes", upvotes)
             .input("downvotes", downvotes)
             .execute("postQuestion");
@@ -187,3 +188,40 @@ const deleteQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.deleteQuestion = deleteQuestion;
+//Get single user questions
+const getUserQuestons = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c;
+    try {
+        const pool = yield mssql_1.default.connect(config_1.sqlConfig);
+        const { pageNumber } = req.params;
+        const pageSize = 10;
+        let questions = (yield (yield pool.request()).input('user_id', (_c = req.payload) === null || _c === void 0 ? void 0 : _c.user_id[0]).input('pageSize', pageSize).input('pageNumber', pageNumber).execute('getUserQuestions')).recordset;
+        if (questions.length) {
+            return res.status(200).json(questions);
+        }
+        else {
+            return res.status(404).json({ message: "You have asked no questions yet" });
+        }
+    }
+    catch (error) {
+        return res.status(500).json(error.message);
+    }
+});
+exports.getUserQuestons = getUserQuestons;
+//Get all tags
+const getTags = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const pool = yield mssql_1.default.connect(config_1.sqlConfig);
+        let tags = yield (yield pool.request().execute('getTags')).recordset;
+        if (tags.length === 0) {
+            return res.status(404).json({ message: "No tags found!" });
+        }
+        else {
+            return res.status(200).json(tags);
+        }
+    }
+    catch (error) {
+        return res.status(500).json(error.message);
+    }
+});
+exports.getTags = getTags;

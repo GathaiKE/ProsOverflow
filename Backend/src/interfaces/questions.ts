@@ -20,6 +20,7 @@ export interface Question{
 
 export interface ExtdQuestReq extends Request{
     payload?:TokenData
+    pageNumber?:string
     body:{
         question_id:string
         title:string
@@ -33,5 +34,6 @@ export interface ExtdQuestReq extends Request{
     }
     params:{
         question_id:string
+        pageNumber:string
     }
 }

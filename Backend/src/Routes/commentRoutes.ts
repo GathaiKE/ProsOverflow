@@ -5,8 +5,8 @@ import { addComment, deleteComment, getAllComments, getAnswerComments, updateCom
 
 export const commentRoutes=Router()
 
-commentRoutes.post('/add/:answer_id',addComment)
-commentRoutes.put('/update/:comment_id',updateComment)
-commentRoutes.get('/get/:answer_id',getAnswerComments)
-commentRoutes.get('/all',getAllComments)
-commentRoutes.delete('/delete/:comment_id',deleteComment)
+commentRoutes.post('/add/:answer_id',verifyUser,addComment)
+commentRoutes.put('/update/:comment_id',verifyUser,updateComment)
+commentRoutes.get('/get/:answer_id',verifyUser,getAnswerComments)
+commentRoutes.get('/all',verifyUser,getAllComments)
+commentRoutes.delete('/delete/:comment_id',verifyUser,deleteComment)
